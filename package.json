@@ -1,0 +1,56 @@
+{
+    "name": "@vafast/static",
+    "version": "0.0.1",
+    "description": "Plugin for Vafast for static file serving",
+    "license": "MIT",
+    "scripts": {
+        "dev": "bun run --watch example/index.ts",
+        "test": "bun test",
+        "test:node": "echo 'Node.js tests skipped for now'",
+        "build": "bun run build:tsup",
+        "build:tsup": "tsup",
+        "release": "bun run build && bun run test && npm publish --access public"
+    },
+    "peerDependencies": {
+        "tirne": ">= 0.1.16"
+    },
+    "devDependencies": {
+        "@types/node": "^24.3.0",
+        "eslint": "9.6.0",
+        "tirne": "0.1.16",
+        "tsup": "^8.1.0",
+        "tsx": "^4.20.4",
+        "typescript": "^5.5.3"
+    },
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        "./package.json": "./package.json",
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs",
+            "require": "./dist/cjs/index.js"
+        }
+    },
+    "keywords": [
+        "vafast",
+        "static",
+        "files"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/vafastjs/vafast-static"
+    },
+    "author": {
+        "name": "saltyAom",
+        "url": "https://github.com/SaltyAom",
+        "email": "saltyaom@gmail.com"
+    },
+    "homepage": "https://github.com/vafastjs/vafast-static",
+    "bugs": "https://github.com/vafastjs/vafast-static/issues",
+    "dependencies": {
+        "": "./test/node/cjs/",
+        "node-cache": "^5.1.2"
+    }
+}
