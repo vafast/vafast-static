@@ -11,17 +11,17 @@
         "build:tsup": "tsup",
         "release": "bun run build && bun run test && npm publish --access public"
     },
-    "peerDependencies": {
-        "tirne": ">= 0.1.16"
-    },
-    "devDependencies": {
-        "@types/node": "^24.3.0",
-        "eslint": "9.6.0",
-        "tirne": "0.1.16",
-        "tsup": "^8.1.0",
-        "tsx": "^4.20.4",
-        "typescript": "^5.5.3"
-    },
+    	"peerDependencies": {
+		"vafast": ">= 0.1.12"
+	},
+	"devDependencies": {
+		"@types/node": "^24.3.0",
+		"eslint": "9.6.0",
+		"vafast": "^0.1.12",
+		"tsup": "^8.1.0",
+		"tsx": "^4.20.4",
+		"typescript": "^5.5.3"
+	},
     "main": "./dist/cjs/index.js",
     "module": "./dist/index.mjs",
     "types": "./dist/index.d.ts",
@@ -51,6 +51,7 @@
     "bugs": "https://github.com/vafastjs/vafast-static/issues",
     "dependencies": {
         "": "./test/node/cjs/",
-        "node-cache": "^5.1.2"
+        "node-cache": "^5.1.2",
+        "vafast": "^0.1.13"
     }
 }

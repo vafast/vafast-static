@@ -1,4 +1,4 @@
-import { Server, Route } from 'tirne'
+import type { Route } from 'vafast'
 
 import { readdir, stat, readFile } from 'fs/promises'
 import { resolve, resolve as resolveFn, join, sep } from 'path'
@@ -232,10 +232,10 @@ export const staticPlugin = async <Prefix extends string = '/prefix'>(
                           const fileBuffer = await readFile(absolutePath)
                           return new Response(fileBuffer, { headers })
                       }
-                    : async ({ headers: reqHeaders }) => {
+                    : async (req: Request) => {
                           // Convert Headers to Record<string, string | undefined>
                           const headersRecord: Record<string, string | undefined> = {}
-                          reqHeaders.forEach((value, key) => {
+                          req.headers.forEach((value, key) => {
                               headersRecord[key] = value
                           })
                           
@@ -268,10 +268,10 @@ export const staticPlugin = async <Prefix extends string = '/prefix'>(
                               const fileBuffer = await readFile(absolutePath)
                               return new Response(fileBuffer, { headers })
                           }
-                        : async ({ headers: reqHeaders }) => {
+                        : async (req: Request) => {
                               // Convert Headers to Record<string, string | undefined>
                               const headersRecord: Record<string, string | undefined> = {}
-                              reqHeaders.forEach((value, key) => {
+                              req.headers.forEach((value, key) => {
                                   headersRecord[key] = value
                               })
                               
@@ -305,9 +305,9 @@ export const staticPlugin = async <Prefix extends string = '/prefix'>(
             routes.push({
                 method: 'GET',
                 path: `${prefix}/*`,
-                handler: async ({ url, headers: reqHeaders }) => {
+                handler: async (req: Request) => {
                     // Extract path from URL for wildcard routes
-                    const urlPath = new URL(url).pathname
+                    const urlPath = new URL(req.url).pathname
                     const wildcardPath = urlPath.replace(prefix, '')
                     
                     let path = enableDecodeURI
@@ -355,6 +355,7 @@ export const staticPlugin = async <Prefix extends string = '/prefix'>(
                                         )
 
                                     filePath = `${path}${sep}index.html`
+                                    fileCache.set(path, filePath)
                                 } else {
                                     if (indexHTML && hasCache === undefined)
                                         htmlCache.set(
@@ -380,7 +381,7 @@ export const staticPlugin = async <Prefix extends string = '/prefix'>(
                         const etag = await generateETag(filePath)
                         // Convert Headers to Record<string, string | undefined>
                         const headersRecord: Record<string, string | undefined> = {}
-                        reqHeaders.forEach((value, key) => {
+                        req.headers.forEach((value, key) => {
                             headersRecord[key] = value
                         })
                         
