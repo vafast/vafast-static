@@ -6,8 +6,8 @@ export default defineConfig({
   dts: true,
   clean: true,
   sourcemap: true,
-  splitting: false,
-  bundle: true,
+    splitting: false,
+    bundle: true,
   target: 'node18',
-  outDir: 'dist',
+    outDir: 'dist',
 })
