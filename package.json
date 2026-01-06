@@ -10,26 +10,27 @@
         "test": "npx vitest run",
         "release": "npm run build && npm run test && npx bumpp && npm publish --access=public"
     },
-    	"peerDependencies": {
-		"vafast": ">= 0.1.12"
-	},
-	"files": [
-		"dist",
-		"README.md",
-		"LICENSE"
-	],
-	"devDependencies": {
-		"@types/bun": "^1.1.2",
-		"@types/node": "^24.3.0",
-		"@typescript-eslint/eslint-plugin": "^7.9.0",
-		"@typescript-eslint/parser": "^7.9.0",
-		"eslint": "^9.2.0",
-		"rimraf": "^6.0.1",
-		"tsup": "^8.5.1",
-		"tsx": "^4.20.4",
-		"typescript": "^5.4.5",
-		"vafast": "^0.3.4"
-	},
+    "peerDependencies": {
+        "vafast": "^0.3.10"
+    },
+    "files": [
+        "dist",
+        "README.md",
+        "LICENSE"
+    ],
+    "devDependencies": {
+        "@types/bun": "^1.1.2",
+        "@types/node": "^24.3.0",
+        "@typescript-eslint/eslint-plugin": "^7.9.0",
+        "@typescript-eslint/parser": "^7.9.0",
+        "eslint": "^9.2.0",
+        "rimraf": "^6.0.1",
+        "tsup": "^8.5.1",
+        "tsx": "^4.20.4",
+        "typescript": "^5.4.5",
+        "vafast": "^0.3.10",
+        "vitest": "^4.0.16"
+    },
     "main": "./dist/index.js",
     "module": "./dist/index.js",
     "types": "./dist/index.d.ts",

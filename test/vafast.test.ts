@@ -1,8 +1,9 @@
-import { Server, createRouteHandler } from 'vafast'
+import { Server, createHandler, json } from 'vafast'
 import { staticPlugin } from '../src/index'
 import { writeFile, mkdir, rm } from 'fs/promises'
 import { join } from 'path'
 import { tmpdir } from 'os'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('Vafast Static Plugin', () => {
     let tempDir: string
@@ -216,10 +217,10 @@ describe('Vafast Static Plugin', () => {
         // 添加自定义路由
         const customRoutes = [
             {
-                method: 'GET',
+                method: 'GET' as const,
                 path: '/',
-                handler: createRouteHandler(() => {
-                    return { message: 'Static server is running' }
+                handler: createHandler(() => {
+                    return json({ message: 'Static server is running' })
                 })
             }
         ]

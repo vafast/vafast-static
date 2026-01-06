@@ -1,4 +1,5 @@
 import type { Route } from 'vafast'
+import { empty, parseHeaders } from 'vafast'
 
 import { readdir, stat, readFile } from 'fs/promises'
 import { resolve, resolve as resolveFn, join, sep } from 'path'
@@ -230,20 +231,14 @@ export const staticPlugin = async <Prefix extends string = '/prefix'>(
                 handler: noCache
                     ? async () => {
                           const fileBuffer = await readFile(absolutePath)
-                          return new Response(fileBuffer, { headers })
+                          return new Response(new Uint8Array(fileBuffer), { headers })
                       }
                     : async (req: Request) => {
-                          // Convert Headers to Record<string, string | undefined>
-                          const headersRecord: Record<string, string | undefined> = {}
-                          req.headers.forEach((value, key) => {
-                              headersRecord[key] = value
-                          })
+                          // 使用 vafast 内置解析器
+                          const headersRecord = parseHeaders(req) as Record<string, string | undefined>
                           
                           if (await isCached(headersRecord, etag, absolutePath)) {
-                              return new Response(null, {
-                                  status: 304,
-                                  headers
-                              })
+                              return empty(304, headers)
                           }
 
                           const responseHeaders = { ...headers }
@@ -253,7 +248,7 @@ export const staticPlugin = async <Prefix extends string = '/prefix'>(
                               responseHeaders['Cache-Control'] += `, max-age=${maxAge}`
 
                           const fileBuffer = await readFile(absolutePath)
-                          return new Response(fileBuffer, {
+                          return new Response(new Uint8Array(fileBuffer), {
                               headers: responseHeaders
                           })
                       }
@@ -266,20 +261,14 @@ export const staticPlugin = async <Prefix extends string = '/prefix'>(
                     handler: noCache
                         ? async () => {
                               const fileBuffer = await readFile(absolutePath)
-                              return new Response(fileBuffer, { headers })
+                              return new Response(new Uint8Array(fileBuffer), { headers })
                           }
                         : async (req: Request) => {
-                              // Convert Headers to Record<string, string | undefined>
-                              const headersRecord: Record<string, string | undefined> = {}
-                              req.headers.forEach((value, key) => {
-                                  headersRecord[key] = value
-                              })
+                              // 使用 vafast 内置解析器
+                              const headersRecord = parseHeaders(req) as Record<string, string | undefined>
                               
                               if (await isCached(headersRecord, etag, pathName)) {
-                                  return new Response(null, {
-                                      status: 304,
-                                      headers
-                                  })
+                                  return empty(304, headers)
                               }
 
                               const responseHeaders = { ...headers }
@@ -289,7 +278,7 @@ export const staticPlugin = async <Prefix extends string = '/prefix'>(
                                   responseHeaders['Cache-Control'] += `, max-age=${maxAge}`
 
                               const fileBuffer = await readFile(absolutePath)
-                              return new Response(fileBuffer, {
+                              return new Response(new Uint8Array(fileBuffer), {
                                   headers: responseHeaders
                               })
                           }
@@ -373,23 +362,17 @@ export const staticPlugin = async <Prefix extends string = '/prefix'>(
 
                         if (noCache) {
                             const fileBuffer = await readFile(filePath)
-                            return new Response(fileBuffer, {
+                            return new Response(new Uint8Array(fileBuffer), {
                                 headers
                             })
                         }
 
                         const etag = await generateETag(filePath)
-                        // Convert Headers to Record<string, string | undefined>
-                        const headersRecord: Record<string, string | undefined> = {}
-                        req.headers.forEach((value, key) => {
-                            headersRecord[key] = value
-                        })
+                        // 使用 vafast 内置解析器
+                        const headersRecord = parseHeaders(req) as Record<string, string | undefined>
                         
                         if (await isCached(headersRecord, etag, path))
-                            return new Response(null, {
-                                status: 304,
-                                headers
-                            })
+                            return empty(304, headers)
 
                         const responseHeaders = { ...headers }
                         responseHeaders['Etag'] = etag
@@ -398,7 +381,7 @@ export const staticPlugin = async <Prefix extends string = '/prefix'>(
                             responseHeaders['Cache-Control'] += `, max-age=${maxAge}`
 
                         const fileBuffer = await readFile(filePath)
-                        return new Response(fileBuffer, {
+                        return new Response(new Uint8Array(fileBuffer), {
                             headers: responseHeaders
                         })
                     } catch (error) {
