@@ -1,6 +1,6 @@
 {
     "name": "@vafast/static",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "Plugin for Vafast for static file serving",
     "type": "module",
     "license": "MIT",
