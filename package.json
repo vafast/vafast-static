@@ -44,15 +44,15 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/vafastjs/vafast-static"
+        "url": "https://github.com/vafast/vafast-static"
     },
     "author": {
         "name": "saltyAom",
         "url": "https://github.com/SaltyAom",
         "email": "saltyaom@gmail.com"
     },
-    "homepage": "https://github.com/vafastjs/vafast-static",
-    "bugs": "https://github.com/vafastjs/vafast-static/issues",
+    "homepage": "https://github.com/vafast/vafast-static",
+    "bugs": "https://github.com/vafast/vafast-static/issues",
     "dependencies": {
         "node-cache": "^5.1.2"
     }
