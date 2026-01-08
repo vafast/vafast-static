@@ -5,7 +5,7 @@ Plugin for [Vafast](https://github.com/vafastjs/vafast) for serving static files
 ## Installation
 
 ```bash
-bun add @vafast/static
+npm install @vafast/static
 # or
 npm install @vafast/static
 ```
