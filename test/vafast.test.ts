@@ -1,4 +1,4 @@
-import { Server, createHandler, json } from 'vafast'
+import { Server, defineRoute, defineRoutes, json } from 'vafast'
 import { staticPlugin } from '../src/index'
 import { writeFile, mkdir, rm } from 'fs/promises'
 import { join } from 'path'
@@ -215,15 +215,13 @@ describe('Vafast Static Plugin', () => {
         })
 
         // 添加自定义路由
-        const customRoutes = [
-            {
-                method: 'GET' as const,
+        const customRoutes = defineRoutes([
+            defineRoute({
+                method: 'GET',
                 path: '/',
-                handler: createHandler(() => {
-                    return json({ message: 'Static server is running' })
-                })
-            }
-        ]
+                handler: () => json({ message: 'Static server is running' })
+            })
+        ])
 
         const allRoutes = [...customRoutes, ...staticRoutes]
         const app = new Server(allRoutes)
